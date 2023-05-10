@@ -1,29 +1,36 @@
 import { useState } from 'react'
 import Input from '../atoms/Input'
-import { CreateProducts,RetrieveProducts } from '../../actions/product'
-import { useDispatch, useSelector } from 'react-redux'
+import productsService from '../../services/products.service'       
 const AddProduct = () => {
     const [prodName, setProdName] = useState('')
     const [prodPrice, setProdPrice] = useState('')
     const [prodImg, setProdImg] = useState('')
     const [success, setSuccess] = useState(false)
-    const dispatch = useDispatch()
     const { message } = useSelector((state) => state.message);
     const initialState = {
         prodName: "",
         prodPrice: "",
         prodImg: ""
     }
+
+                           
     const [prods, setProds] = useState(initialState)
     const handleProduct = () => {
-        dispatch(CreateProducts(prodName, prodPrice, prodImg))
-            .then(() => {
-                setSuccess(true);
-                setProds(initialState)
-            }).catch(() => {
-                setSuccess(false)
-                console.log("successful")
-            })
+        var data = {
+            prodName: prods.prodName,
+            prodPrice: prods.prodPrice,
+            prodImg: prods.prodImg
+        };
+
+        productsService.create(data)
+        .then(res=>{
+            setProds({
+                prodName: res.data.prodName,
+                prodPrice: prods.data.prodPrice,
+                prodImg:res.data.prodImg
+            });
+            setSuccess(true)
+        })
     }
     return (
         <>
@@ -43,9 +50,7 @@ const AddProduct = () => {
                 <button onSubmit={handleProduct} className="bg-[#D78484] border-none w-[10rem] p-4">Save Product</button>
             </form>
 
-            {
-                message && <div className={success ? "alert alert-sucess" : "alert alert-danger"}>{message}</div>
-            }
+           
         </>
 
     )
