@@ -3,5 +3,5 @@ import { productReducer } from './productReducer'
 
 
 export default combineReducers({
-    productReducer
+    reducer:productReducer
 })

@@ -4,7 +4,7 @@ import { CREATE_PRODUCTS,RETRIEVE_PRODUCTS } from "../actions/type";
 const initialState = [];
 
 
-export function productReducer(products = initialState, action) {
+export function roductReducer(products = initialState, action) {
     const { type, payload } = action;
 
 
