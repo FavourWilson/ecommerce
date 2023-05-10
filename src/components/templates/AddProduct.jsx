@@ -6,7 +6,7 @@ const AddProduct = () => {
     const [prodPrice, setProdPrice] = useState('')
     const [prodImg, setProdImg] = useState('')
     const [success, setSuccess] = useState(false)
-    const { message } = useSelector((state) => state.message);
+  
     const initialState = {
         prodName: "",
         prodPrice: "",
@@ -30,6 +30,7 @@ const AddProduct = () => {
                 prodImg:res.data.prodImg
             });
             setSuccess(true)
+            console.log("successful")
         })
     }
     return (
@@ -41,11 +42,11 @@ const AddProduct = () => {
 
                 <Input type='number' value={prodPrice}
                     onChange={(e) => setProdPrice(e.target.value)}
-                    placeHolder="Product Name" />
+                    placeHolder="Product Price" />
 
                 <Input type='file' value={prodImg}
                     onChange={(e) => setProdImg(e.target.value)}
-                    placeHolder="Product Name" />
+                    placeHolder="Product Image" />
 
                 <button onSubmit={handleProduct} className="bg-[#D78484] border-none w-[10rem] p-4">Save Product</button>
             </form>
