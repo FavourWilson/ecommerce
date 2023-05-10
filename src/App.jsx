@@ -4,14 +4,14 @@ import UserProfile from './components/templates/profile'
 import AddProduct from './components/templates/AddProduct'
 
 function App() {
-  const [count, setCount] = useState(0)
+ 
 
   return (
     <>
       <Routes>
-        <Route path='/' element={Home} />
-        <Route path='/profile' element={UserProfile} />
-        <Route path='/addproduct' element={AddProduct} />
+        <Route path='/' element={<Home/>} />
+        <Route path='/profile' element={<UserProfile/>} />
+        <Route path='/addproduct' element={<AddProduct/>} />
       </Routes>
     </>
   )
