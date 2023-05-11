@@ -2,7 +2,7 @@ import product from '../../assets/product.png'
 import { useEffect, useState } from 'react';
 import productsService from '../../services/products.service';
 import axios from 'axios';
-const CategoryCard = () => {
+const CategoryCard = ({prods}) => {
   const [zoom,setZoom] = useState(!!0)
   const Zoom = () => {
     setZoom(!zoom);
@@ -25,7 +25,7 @@ const CategoryCard = () => {
 
     <div onMouseEnter={Zoom} onMouseLeave={Zoom}>
       {prods.map((prod, key) => {
-           <div  className={`${zoom ? "absolute":""} pb-7 flex flex-col rounded-md bg-white shadow-md border-none"}`}>
+           <div key={prod._id} className={`${zoom ? "absolute":""} pb-7 flex flex-col rounded-md bg-white shadow-md border-none"}`}>
           <img src={product} className="w-full h-[10rem]" />
       <div className="px-4 ">
                <p className="font-bold">{ prod.prodName}</p>
