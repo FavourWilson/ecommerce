@@ -1,8 +1,10 @@
 export const Details = [
     {
-        "title": "FullName"
+        "name": "John Doe",
+        "Gender": "male"
     },
     {
-        "title": "Gender"
-    }
+        "name": "Angela Doe",
+        "Gender": "female"
+    },
 ];

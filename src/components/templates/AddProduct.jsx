@@ -1,54 +1,59 @@
 import { useState } from 'react'
 import Input from '../atoms/Input'
-import productsService from '../../services/products.service'       
+import axios from 'axios';
+
 const AddProduct = () => {
     const [prodName, setProdName] = useState('')
-    const [prodPrice, setProdPrice] = useState('')
-    const [prodImg, setProdImg] = useState('')
-    const [success, setSuccess] = useState(false)
+    const [prodPrice, setProdPrice] = useState(0)
+    const [prodImg, setProdImg] = useState(null)
+    
+
+    const handleTextChange = (e) => {
+        setProdName(e.target.value);
+      };
+    
+      const handleNumberChange = (e) => {
+        setProdPrice(e.target.value);
+      };
+    
+      const handleImageChange = (e) => {
+        setProdImg(e.target.files[0]);
+      };
+    
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('prodName', prodName);
+        formData.append('prodPrice', prodPrice);
+        formData.append('prodImage', prodImg);
+        
+        try {
+          await axios.post('http://localhost:8000/api/products', formData);
+          alert('Data created successfully');
+        } catch (error) {
+          console.log(error);
+          alert('Error creating data');
+        }
+      };
   
-    const initialState = {
-        prodName: "",
-        prodPrice: "",
-        prodImg: ""
-    }
-
-                           
-    const [prods, setProds] = useState(initialState)
-    const handleProduct = () => {
-        var data = {
-            prodName: prods.prodName,
-            prodPrice: prods.prodPrice,
-            prodImg: prods.prodImg
-        };
-
-        productsService.create(data)
-        .then(res=>{
-            setProds({
-                prodName: res.data.prodName,
-                prodPrice: prods.data.prodPrice,
-                prodImg:res.data.prodImg
-            });
-            setSuccess(true)
-            console.log("successful")
-        })
-    }
     return (
         <>
-            <form className='flex flex-col gap-5 justify-center items-center'>
+            <form onSubmit={handleSubmit} className='flex flex-col gap-5 justify-center items-center'>
                 <Input type='text' value={prodName}
-                    onChange={(e) => setProdName(e.target.value)}
+                    onChange={handleTextChange}
                     placeHolder="Product Name" />
 
+
                 <Input type='number' value={prodPrice}
-                    onChange={(e) => setProdPrice(e.target.value)}
+                    onChange={handleNumberChange}
                     placeHolder="Product Price" />
 
-                <Input type='file' value={prodImg}
-                    onChange={(e) => setProdImg(e.target.value)}
+                <Input type='file' 
+                    onChange={handleImageChange}
                     placeHolder="Product Image" />
 
-                <button onSubmit={handleProduct} className="bg-[#D78484] border-none w-[10rem] p-4">Save Product</button>
+                <button type='submit' className="bg-[#D78484] border-none w-[10rem] p-4">Save Product</button>
             </form>
 
            
