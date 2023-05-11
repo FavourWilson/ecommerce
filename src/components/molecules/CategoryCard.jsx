@@ -1,17 +1,35 @@
 import product from '../../assets/product.png'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import productsService from '../../services/products.service';
+import axios from 'axios';
 const CategoryCard = () => {
   const [zoom,setZoom] = useState(!!0)
   const Zoom = () => {
     setZoom(!zoom);
   }
+  const [prods, setProds] = useState([]);
+  useEffect(() => {
+        fetchProductList()
+    }, [])
+  
+    const fetchProductList = () => {
+        axios.get('http://localhost:8000/api/products')
+        .then(function (response) {
+          setProds(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+    }
   return (
+
     <div onMouseEnter={Zoom} onMouseLeave={Zoom}>
-      <div className={`${zoom ? "absolute":""} pb-7 flex flex-col rounded-md bg-white shadow-md border-none"}`}>
+      {prods.map((prod, key) => {
+           <div  className={`${zoom ? "absolute":""} pb-7 flex flex-col rounded-md bg-white shadow-md border-none"}`}>
           <img src={product} className="w-full h-[10rem]" />
       <div className="px-4 ">
-        <p className="font-bold">Adidas Converse</p>
-        <p className="font-semibold">$1200</p>
+               <p className="font-bold">{ prod.prodName}</p>
+               <p className="font-semibold">{ prod.prodPrice}</p>
         <div className={`${zoom ? 'lg:flex flex justify-center items-center  mt-4': 'hidden'} `}>
           <a
             href=""
@@ -22,6 +40,10 @@ const CategoryCard = () => {
         </div>
       </div>
       </div>
+      })
+     
+      }
+      
     </div>
   )
 }

@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import { BsSearch } from 'react-icons/bs'
 import { RiArrowDownSLine } from 'react-icons/ri'
 const Search = () => {
+  const [search, SetSearch] = useState("")
+  const [searchparam] = useState([])
   return (
     <div className='-translate-y-12 flex justify-center'>
       <label className='flex justify-between items-center bg-white border-3 shadow-md rounded-md px-4 py-4 w-[250px] lg:w-[400px]'>
