@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { BsSearch } from 'react-icons/bs'
 import { RiArrowDownSLine } from 'react-icons/ri'
-import { useHistory } from "react-router-dom";
-const Search = ({search}) => {
+import { useNavigate } from "react-router-dom";
+const Search = () => {
   const [search, setSearch] = useState("")
-  const history = useHistory();
+  const history = useNavigate();
   
   return (
     <div className='-translate-y-12 flex justify-center'>

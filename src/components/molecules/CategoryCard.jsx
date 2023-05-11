@@ -2,7 +2,7 @@ import product from '../../assets/product.png'
 import { useEffect, useState } from 'react';
 import productsService from '../../services/products.service';
 import axios from 'axios';
-const CategoryCard = ({prods}) => {
+const CategoryCard = () => {
   const [zoom,setZoom] = useState(!!0)
   const Zoom = () => {
     setZoom(!zoom);
@@ -12,21 +12,22 @@ const CategoryCard = ({prods}) => {
         fetchProductList()
     }, [])
   
-    const fetchProductList = () => {
-        axios.get('http://localhost:8000/api/products')
-        .then(function (response) {
-          setProds(response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
+    const fetchProductList = async() => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/products');
+        setProds(response.data)
+      } catch (error) {
+        console.log(error);
+      }
+        
+       
     }
   return (
 
     <div onMouseEnter={Zoom} onMouseLeave={Zoom}>
-      {prods.map((prod, key) => {
-           <div key={prod._id} className={`${zoom ? "absolute":""} pb-7 flex flex-col rounded-md bg-white shadow-md border-none"}`}>
-          <img src={product} className="w-full h-[10rem]" />
+      {prods.map((prod, key) => (
+           <div key={key._id} className={`${zoom ? "absolute":""} pb-7 flex flex-col rounded-md bg-white shadow-md border-none"}`}>
+          <img src={prod.prodImg} className="w-full h-[10rem]" />
       <div className="px-4 ">
                <p className="font-bold">{ prod.prodName}</p>
                <p className="font-semibold">{ prod.prodPrice}</p>
@@ -40,7 +41,7 @@ const CategoryCard = ({prods}) => {
         </div>
       </div>
       </div>
-      })
+      ))
      
       }
       
