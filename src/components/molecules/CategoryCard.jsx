@@ -22,8 +22,11 @@ const CategoryCard = () => {
   }, []);
 
   return (
+    <>
+    
+     {prods.map((prod, key) => (
     <div onMouseEnter={Zoom} onMouseLeave={Zoom}>
-      {prods.map((prod, key) => (
+      
         <div
           key={key._id}
           className={`${
@@ -50,8 +53,10 @@ const CategoryCard = () => {
             </div>
           </div>
         </div>
-      ))}
-    </div>
+      
+      </div>
+      ))}</>
+   
   );
 };
 
