@@ -1,34 +1,15 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 
-const CategoryCard = () => {
+const CategoryCard = ({prod,key}) => {
   const [zoom, setZoom] = useState(!!0);
   const Zoom = () => {
     setZoom(!zoom);
   };
-  const [prods, setProds] = useState([]);
-
-  useEffect(() => {
-    const fetchProductList = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/products");
-        setProds(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchProductList();
-  }, []);
-
+  
   return (
-    <>
-    
-     {prods.map((prod, key) => (
     <div onMouseEnter={Zoom} onMouseLeave={Zoom}>
-      
         <div
-          key={key._id}
+          key={prod._id}
           className={`${
             zoom ? "absolute" : ""
           } pb-7 flex flex-col rounded-md bg-white shadow-md border-none"}`}
@@ -40,7 +21,7 @@ const CategoryCard = () => {
             <div
               className={`${
                 zoom
-                  ? "lg:flex flex justify-center items-center  mt-4"
+                  ? "lg:flex flex justify-center items-center mt-4"
                   : "hidden"
               } `}
             >
@@ -55,8 +36,6 @@ const CategoryCard = () => {
         </div>
       
       </div>
-      ))}</>
-   
   );
 };
 
